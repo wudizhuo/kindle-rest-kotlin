@@ -21,8 +21,7 @@ object HtmlExtract {
 
         val articleJson: String = driver.executeScript(js4) as String
 
-        val article = Gson().fromJson(articleJson, Article::class.java)
-        return article
+        return Gson().fromJson(articleJson, Article::class.java)
     }
 
     private fun clipUrl(url: String): String {

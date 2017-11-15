@@ -6,7 +6,7 @@ import org.junit.Test as test
 class HtmlExtractTest {
     @test
     fun testGetContentByMozillaLib() {
-        val url = "http://www.jianshu.com/p/e815b9e9dd6d?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io"
-        assertTrue(HtmlExtract.getReadabilityHtml(url).length > 0)
+        assertTrue(HtmlExtract.getReadabilityHtml("http://www.jianshu.com/p/e815b9e9dd6d?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io").length > 0)
+        assertTrue(HtmlExtract.getReadabilityHtml("https://zhuanlan.zhihu.com/p/22049205").length > 0)
     }
 }
