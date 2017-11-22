@@ -1,6 +1,7 @@
 package com.sunzhuo.kindle.module.sender.utils
 
 import com.google.gson.Gson
+import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.module.sender.domain.Article
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -18,13 +19,10 @@ object HtmlExtract {
         val js2 = File(basePath + "lib/readability/Readability.js").inputStream().bufferedReader().use { it.readText() }
         val js3 = File(basePath + "lib/getArticle.js").inputStream().bufferedReader().use { it.readText() }
         val js4 = js1 + js2 + js3
-
         val articleJson: String = driver.executeScript(js4) as String
-
+        if (articleJson.isEmpty() || articleJson == "null") {
+            throw UrlContentNotFoundException()
+        }
         return Gson().fromJson(articleJson, Article::class.java)
-    }
-
-    private fun clipUrl(url: String): String {
-        return url.substring(url.indexOf("http"))
     }
 }
