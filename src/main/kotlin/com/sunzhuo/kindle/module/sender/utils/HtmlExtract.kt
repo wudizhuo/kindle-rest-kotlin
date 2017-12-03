@@ -40,6 +40,7 @@ object HtmlExtract {
     fun getReadabilityHtmlAndSave2Local(url: String): String {
         getArticleJson(url)
 
+        //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
 
         var regex = "<img[\\s\\S]*?src\\s*=\\s*[\\\"|'](.*?)[\\\"|'][\\s\\S]*?>"
