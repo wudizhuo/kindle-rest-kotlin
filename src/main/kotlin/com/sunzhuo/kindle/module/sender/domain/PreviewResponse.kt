@@ -1,5 +1,3 @@
 package com.sunzhuo.kindle.module.sender.domain
 
-class RequestUrl {
-    val url: String = ""
-}
+data class PreviewResponse(val content: String)

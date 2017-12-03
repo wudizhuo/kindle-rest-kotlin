@@ -2,7 +2,6 @@ package com.sunzhuo.kindle.module.sender.rest
 
 import com.sunzhuo.kindle.common.httpstatus.FromEmailInvalidException
 import com.sunzhuo.kindle.common.httpstatus.ToEmailInvalidException
-import com.sunzhuo.kindle.module.sender.domain.ResponseContent
 import com.sunzhuo.kindle.module.sender.domain.SendRequest
 import com.sunzhuo.kindle.module.sender.service.ContentService
 import org.apache.commons.validator.routines.EmailValidator
@@ -17,13 +16,13 @@ class SendController {
 
     @PostMapping("/send")
     @ResponseStatus(HttpStatus.CREATED)
-    fun send(@RequestBody request: SendRequest): ResponseContent {
+    fun send(@RequestBody request: SendRequest) {
         if (EmailValidator.getInstance().isValid(request.from_email)) {
             throw FromEmailInvalidException()
         }
         if (EmailValidator.getInstance().isValid(request.to_email)) {
             throw ToEmailInvalidException()
         }
-        return ResponseContent(ContentService.getContent(request.url))
+        ContentService.send(request)
     }
 }

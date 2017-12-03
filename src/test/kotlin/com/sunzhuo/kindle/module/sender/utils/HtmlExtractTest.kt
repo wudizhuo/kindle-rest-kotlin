@@ -29,7 +29,7 @@ class HtmlExtractTest {
 
     @test
     fun testSaveZhihu() {
-        HtmlExtract.getReadabilityHtmlAndReplace("https://www.gatesnotes.com/Health/Digging-Deep-Into-Alzheimers?WT.mc_id=20171119163311_Alzheimers_BG-LI&WT.tsrc=BGLI&linkId=44907215")
+        assertNotNull(HtmlExtract.getReadabilityHtmlAndSave2Local("https://www.gatesnotes.com/Health/Digging-Deep-Into-Alzheimers?WT.mc_id=20171119163311_Alzheimers_BG-LI&WT.tsrc=BGLI&linkId=44907215"))
     }
 
     @test

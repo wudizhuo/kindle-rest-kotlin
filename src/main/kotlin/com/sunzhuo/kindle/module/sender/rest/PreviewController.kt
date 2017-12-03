@@ -1,7 +1,7 @@
 package com.sunzhuo.kindle.module.sender.rest
 
-import com.sunzhuo.kindle.module.sender.domain.RequestUrl
-import com.sunzhuo.kindle.module.sender.domain.ResponseContent
+import com.sunzhuo.kindle.module.sender.domain.PreviewRequest
+import com.sunzhuo.kindle.module.sender.domain.PreviewResponse
 import com.sunzhuo.kindle.module.sender.service.ContentService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,7 +14,7 @@ class PreviewController {
 
     @PostMapping("/preview")
     @ResponseStatus(HttpStatus.CREATED)
-    fun preview(@RequestBody requestUrl: RequestUrl): ResponseContent {
-        return ResponseContent(ContentService.getContent(requestUrl.url))
+    fun preview(@RequestBody requestUrl: PreviewRequest): PreviewResponse {
+        return PreviewResponse(ContentService.getContent(requestUrl.url))
     }
 }
