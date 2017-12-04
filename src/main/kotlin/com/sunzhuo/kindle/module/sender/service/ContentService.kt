@@ -64,6 +64,7 @@ object ContentService {
         messageHelper.setTo(request.to_email)
         messageHelper.setFrom(request.from_email)
         messageHelper.setSubject("convert")
+        messageHelper.setText("")
         messageHelper.addAttachment("Kindle ZhuShou", mobiFile)
         mailSender.send(message)
     }
