@@ -19,10 +19,10 @@ apply plugin: 'kotlin' // Required for Kotlin integration
 apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.palantir.docker'
-group = 'springio'
+group = 'wudizhuo'
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'kindle-rest-service'
     version = '0.1.0'
 }
 
