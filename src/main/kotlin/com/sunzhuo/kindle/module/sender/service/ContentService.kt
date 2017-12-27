@@ -16,7 +16,7 @@ object ContentService {
     fun getContent(urlStr: String): String {
         val url = checkUrl(urlStr)
 
-        val article: Article = HtmlExtract.getReadabilityHtml(url)
+        val article: Article = HtmlExtract().getReadabilityHtml(url)
         if (article.length == 0L) {
             throw UrlContentNotFoundException()
         }
@@ -28,7 +28,7 @@ object ContentService {
         if (url.isEmpty()) {
             throw UrlInvalidException()
         }
-        url = UrlUtil.parseUrl(url)
+        url = UrlUtil().parseUrl(url)
         val urlValidator = UrlValidator(arrayOf("http", "https"))
         if (!urlValidator.isValid(url)) {
             throw UrlInvalidException()
@@ -38,7 +38,7 @@ object ContentService {
 
     fun genMobi(urlStr: String): String {
         val url = checkUrl(urlStr)
-        val htmlPath = HtmlExtract.getReadabilityHtmlAndSave2Local(url)
+        val htmlPath = HtmlExtract().getReadabilityHtmlAndSave2Local(url)
         val process = Runtime.getRuntime().exec("kindlegen " + htmlPath)
         process.waitFor()
         process.destroy()
@@ -47,7 +47,7 @@ object ContentService {
 
     fun send(request: SendRequest) {
         sendEmail(request, genMobi(request.url))
-        HtmlExtract.getTempPath(request.url).deleteRecursively()
+        HtmlExtract().getTempPath(request.url).deleteRecursively()
     }
 
     private fun sendEmail(request: SendRequest, mobiPath: String) {
