@@ -1,15 +1,17 @@
 package com.sunzhuo.kindle.module.sender.utils
 
-object UrlUtil {
-    fun parseUrl(url: String): String {
-         //TODO 过滤乱七八糟的网址
-        val urlStr=clipUrl(url)
-        if (url.contains("/^http://t.uc.cn/")){
+class UrlUtil {
+    companion object {
+        fun parseUrl(url: String): String {
+            //TODO 过滤乱七八糟的网址
+            val urlStr = clipUrl(url)
+            if (url.contains("/^http://t.uc.cn/")) {
+            }
+            return urlStr
         }
-        return urlStr
-    }
 
-    private fun clipUrl(url: String):String {
-        return url.substring(url.indexOf("http"))
+        private fun clipUrl(url: String): String {
+            return url.substring(url.indexOf("http"))
+        }
     }
 }
