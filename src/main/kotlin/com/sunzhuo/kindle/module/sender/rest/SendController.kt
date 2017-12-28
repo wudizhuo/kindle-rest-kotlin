@@ -17,10 +17,10 @@ class SendController {
     @PostMapping("/send")
     @ResponseStatus(HttpStatus.CREATED)
     fun send(@RequestBody request: SendRequest) {
-        if (EmailValidator.getInstance().isValid(request.from_email)) {
+        if (!EmailValidator.getInstance().isValid(request.from_email)) {
             throw FromEmailInvalidException()
         }
-        if (EmailValidator.getInstance().isValid(request.to_email)) {
+        if (!EmailValidator.getInstance().isValid(request.to_email)) {
             throw ToEmailInvalidException()
         }
         //TODO 添加修复发附件的功能
