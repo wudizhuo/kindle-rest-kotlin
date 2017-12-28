@@ -42,6 +42,7 @@ sourceSets {
     main {
         resources {
             srcDirs "lib"
+            srcDirs "src/resources"
         }
     }
 }
