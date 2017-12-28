@@ -1,5 +1,8 @@
 package com.sunzhuo.kindle.module.sender.domain
 
+import com.sunzhuo.kindle.annotation.Data
+
+@Data
 class Article {
     var uri: UriDomain? = null
     var title: String = ""
