@@ -23,7 +23,6 @@ class SendController {
         if (!EmailValidator.getInstance().isValid(request.to_email)) {
             throw ToEmailInvalidException()
         }
-        //TODO 添加修复发附件的功能
         ContentService.send(request)
     }
 }
