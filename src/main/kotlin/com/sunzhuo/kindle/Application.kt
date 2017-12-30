@@ -17,7 +17,8 @@ class Application {
     fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurerAdapter() {
             override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/**").allowedOrigins("http://www.kindlezhushou.com")
+                registry.addMapping("/**")
+                        .allowedOrigins("http://www.kindlezhushou.com", "http://kindlezhushou.com")
             }
         }
     }
