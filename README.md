@@ -13,7 +13,7 @@ For Product run step:
 
 docker:
 ```
-sudo docker run --net host -t wudizhuo/kindle-rest-service
+sudo docker run -d --net host -t wudizhuo/kindle-rest-service
 
 ```
 
