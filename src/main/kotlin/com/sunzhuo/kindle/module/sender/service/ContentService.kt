@@ -82,7 +82,7 @@ object ContentService {
         messageHelper.setFrom(from_email)
         messageHelper.setSubject("convert")
         messageHelper.setText("")
-        messageHelper.addAttachment("Kindle ZhuShou", mobiFile)
+        messageHelper.addAttachment(mobiFile.name, mobiFile)
         mailSender.send(message)
     }
 }
