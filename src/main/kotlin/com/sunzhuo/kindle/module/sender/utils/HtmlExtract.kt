@@ -55,12 +55,18 @@ class HtmlExtract {
         return file.path
     }
 
+    @Throws(ArrayIndexOutOfBoundsException::class)
     private fun downloadAndReplace(url: String, pageSource: String, imgUrl: String): String {
-        var image = ImageIO.read(URL(imgUrl))
-        var temp = getTempPath(url)
-        val file = File(temp.path + "/" + imgUrl.hashCode() + ".png")
-        ImageIO.write(image, "png", file)
-        return pageSource.replace(imgUrl, file.path)
+        try {
+            val image = ImageIO.read(URL(imgUrl))
+            val temp = getTempPath(url)
+            val file = File(temp.path + "/" + imgUrl.hashCode() + ".png")
+            ImageIO.write(image, "png", file)
+            return pageSource.replace(imgUrl, file.path)
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            e.printStackTrace()
+        }
+        return pageSource
     }
 
     public fun getTempPath(url: String): File {
