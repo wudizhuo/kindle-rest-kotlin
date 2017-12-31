@@ -47,7 +47,7 @@ class HtmlExtract {
 
         val m = Pattern.compile(regex).matcher(pageSource)
         while (m.find()) {
-            pageSource = downloadAndReplace(url, pageSource, m.group(1))
+            pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))
         }
         var temp = getTempPath(url)
         val file = File(temp.path + "/" + url.hashCode() + ".html")
@@ -56,20 +56,21 @@ class HtmlExtract {
     }
 
     @Throws(ArrayIndexOutOfBoundsException::class)
-    private fun downloadAndReplace(url: String, pageSource: String, imgUrl: String): String {
+    private fun downloadAndReplace(url: String, pageSource: String, imgUrl: String, imgTag: String): String {
         try {
             val image = ImageIO.read(URL(imgUrl))
             val temp = getTempPath(url)
             val file = File(temp.path + "/" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
-            return pageSource.replace(imgUrl, file.path)
+            val localImgTag = "<img src= ${file.path}>"
+            return pageSource.replace(imgTag, localImgTag)
         } catch (e: ArrayIndexOutOfBoundsException) {
             e.printStackTrace()
         }
         return pageSource
     }
 
-    public fun getTempPath(url: String): File {
+    fun getTempPath(url: String): File {
         return ApplicationTemp().getDir("kindle_img" + url.hashCode())
     }
 }
