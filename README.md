@@ -55,7 +55,7 @@ sudo docker run -d -p 8910:8910 wernight/phantomjs phantomjs --webdriver=8910
 mwader/postfix-relay
 
 ```
-sudo docker run \
+sudo docker run -d\
         -p 25:25\
     -e POSTFIX_myhostname=www.kindlezhushou.com \
     -e POSTFIX_inet_protocols=ipv4 \
