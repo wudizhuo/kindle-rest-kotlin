@@ -1,6 +1,5 @@
 .gradle
 /build/
-/lib/readability/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### Eclipse ###
