@@ -3,6 +3,7 @@ package com.sunzhuo.kindle.module.sender.utils
 import com.google.gson.Gson
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.module.sender.domain.Article
+import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.phantomjs.PhantomJSDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.HttpCommandExecutor
@@ -29,7 +30,13 @@ class HtmlExtract {
         val js2 = ClassPathResource("readability/Readability.js").inputStream.bufferedReader().use { it.readText() }
         val js3 = ClassPathResource("getArticle.js").inputStream.bufferedReader().use { it.readText() }
         val js4 = js1 + js2 + js3
-        val articleJson: String = driver.executeScript(js4) as String
+        val articleJson: String?
+        try {
+            articleJson = driver.executeScript(js4) as String
+        } catch (e: WebDriverException) {
+            e.printStackTrace()
+            throw UrlContentNotFoundException()
+        }
         if (articleJson.isEmpty() || articleJson == "null") {
             throw UrlContentNotFoundException()
         }
