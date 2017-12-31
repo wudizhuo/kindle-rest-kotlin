@@ -63,8 +63,16 @@ sudo docker run -t -d \
     mwader/postfix-relay
 ```
 
-Next Step: 
+Next TODO Step: 
 
 Create docker-compose.yml to group the docker steps. 
+
+
+Develop Docker Step
+
+```
+./gradlew build docker
+docker push wudizhuo/kindle-rest-service
+```
 
 
