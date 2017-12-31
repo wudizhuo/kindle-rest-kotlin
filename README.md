@@ -13,7 +13,7 @@ For Product run step:
 
 docker:
 ```
-sudo docker run -d --net host -t wudizhuo/kindle-rest-service
+sudo docker run -t -d --name kindle-rest-service --net host wudizhuo/kindle-rest-service
 
 ```
 
@@ -44,21 +44,22 @@ http {
 }
 ```
 ```
-sudo docker run --net host -v ~/nginx.conf:/etc/nginx/nginx.conf:ro -v ~/kindle_web_react:/usr/share/nginx/html -d nginx
+sudo docker run -t -d --name nginx --net host -v ~/nginx.conf:/etc/nginx/nginx.conf:ro -v ~/kindle_web_react:/usr/share/nginx/html nginx
 ```
 phantomjs
 
 ```
-sudo docker run -d -p 8910:8910 wernight/phantomjs phantomjs --webdriver=8910
+sudo docker run -t -d --name phantomjs -p 8910:8910 wernight/phantomjs phantomjs --webdriver=8910
 ```
 
 mwader/postfix-relay
 
 ```
-sudo docker run -d\
+sudo docker run -t -d \
         -p 25:25\
     -e POSTFIX_myhostname=www.kindlezhushou.com \
     -e POSTFIX_inet_protocols=ipv4 \
+    --name postfix \
     mwader/postfix-relay
 ```
 
