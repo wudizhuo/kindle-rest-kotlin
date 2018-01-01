@@ -12,7 +12,6 @@ class ContentServiceTest {
         assertNotNull(path)
     }
 
-    //TODO 把调试phomes的code 记录下来
     @Test
     fun testSaveXueqiu() {
         val path = ContentService.genMobi("https://xueqiu.com/8563172815/98452396")
