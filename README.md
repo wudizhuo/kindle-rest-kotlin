@@ -59,6 +59,7 @@ sudo docker run -t -d \
         -p 25:25\
     -e POSTFIX_myhostname=www.kindlezhushou.com \
     -e POSTFIX_inet_protocols=ipv4 \
+    -e POSTFIX_message_size_limit=62428800 \
     --name postfix \
     mwader/postfix-relay
 ```

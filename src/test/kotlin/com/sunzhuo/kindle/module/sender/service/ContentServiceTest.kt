@@ -12,8 +12,7 @@ class ContentServiceTest {
         assertNotNull(path)
     }
 
-    //TODO 2个问题 1个乱码，一个too large 要改下docker配置的问题  把调试phomes的code 记录下来
-    //Adapter 简书的img标签
+    //TODO 把调试phomes的code 记录下来
     @Test
     fun testSaveXueqiu() {
         val path = ContentService.genMobi("https://xueqiu.com/8563172815/98452396")
