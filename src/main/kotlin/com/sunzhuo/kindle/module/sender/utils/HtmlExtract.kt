@@ -42,8 +42,8 @@ class HtmlExtract {
         driver.get(url)
         val js1 = ClassPathResource("readability/JSDOMParser.js").inputStream.bufferedReader().use { it.readText() }
         val js2 = ClassPathResource("readability/Readability.js").inputStream.bufferedReader().use { it.readText() }
-        val js3 = ClassPathResource("getArticle.js").inputStream.bufferedReader().use { it.readText() }
-        val js4 = js1 + js2 + js3
+        val getArticleAndUpdateDocument = ClassPathResource("getArticle.js").inputStream.bufferedReader().use { it.readText() }
+        val js4 = js1 + js2 + getArticleAndUpdateDocument
         val articleJson: String?
         try {
             articleJson = driver.executeScript(js4) as String
