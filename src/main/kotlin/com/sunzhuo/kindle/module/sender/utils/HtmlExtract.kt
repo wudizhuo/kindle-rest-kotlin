@@ -68,7 +68,7 @@ class HtmlExtract {
             pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))
         }
         val temp = getTempPath(url)
-        val file = File(temp.path + "/" + url.hashCode() + ".html")
+        val file = File(temp.path, "kz" + url.hashCode() + ".html")
         file.writeText(pageSource)
         return file.path
     }
@@ -78,7 +78,7 @@ class HtmlExtract {
         try {
             val image = ImageIO.read(URL(imgUrl))
             val temp = getTempPath(url)
-            val file = File(temp.path + "/" + imgUrl.hashCode() + ".png")
+            val file = File(temp.path, "kz" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
             val localImgTag = "<img src=${file.path}>"
             return pageSource.replace(imgTag, localImgTag)
