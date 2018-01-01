@@ -8,13 +8,14 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver
 import org.springframework.boot.ApplicationTemp
 import org.springframework.core.io.ClassPathResource
 import java.io.File
+import java.net.MalformedURLException
 import java.net.URL
 import java.util.regex.Pattern
 import javax.imageio.ImageIO
 
 class HtmlExtract {
+    val imgTagRegex = """<img[\s\S]*?src\s*=\s*\s*["|'](.*?)["|'][\s\S]*?>"""
     val driver: PhantomJSDriver = DriverProvider.getDrive()
-    val imgTagRegex = """<img[\s\S]*?src\s*=\s*\s*["|'](http.*?)["|'][\s\S]*?>"""
 
     fun getReadabilityHtml(url: String): Article {
         val articleJson: String = getArticleJson(url)
@@ -45,7 +46,7 @@ class HtmlExtract {
 
         //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
-        var pageSource = adaptArticle(url, driver.pageSource)
+        var pageSource = driver.pageSource
         val m = Pattern.compile(imgTagRegex).matcher(pageSource)
         while (m.find()) {
             pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))
@@ -56,15 +57,17 @@ class HtmlExtract {
         return file.path
     }
 
-    private fun adaptArticle(url: String, pageSource: String): String {
-        return ContentAdapter().adapt(url, pageSource)
-    }
-
     @Throws(ArrayIndexOutOfBoundsException::class)
-    private fun downloadAndReplace(url: String, pageSource: String, imgUrl: String, imgTag: String): String {
+    private fun downloadAndReplace(urlString: String, pageSource: String, imgUrl: String, imgTag: String): String {
+        val url = try {
+            URL(imgUrl)
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+            URL("http:" + imgUrl)
+        }
         try {
-            val image = ImageIO.read(URL(imgUrl))
-            val temp = getTempPath(url)
+            val image = ImageIO.read(url)
+            val temp = getTempPath(urlString)
             val file = File(temp.path, "kz" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
             val localImgTag = "<img src=${file.path}>"
