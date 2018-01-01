@@ -40,7 +40,8 @@ class HtmlExtractTest {
 
     @test
     fun testSaveXueqiu() {
-        val path = HtmlExtract().getReadabilityHtml("https://xueqiu.com/8563172815/98452396")
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://xueqiu.com/8563172815/98452396")
+        println(path)
         assertNotNull(path)
     }
 
