@@ -39,9 +39,15 @@ class HtmlExtractTest {
     }
 
     @test
+    fun testSaveXueqiu() {
+        val path = HtmlExtract().getReadabilityHtml("https://xueqiu.com/8563172815/98452396")
+        assertNotNull(path)
+    }
+
+    @test
     fun testPattern() {
         var input = "abc <img alt=\"A growing health crisis: The projected number of people with dementia from 2015 to 2050, millions\" src=\"https://www.gatesnotes.com/-/media/Images/Articles/Health/Digging-Deep-Into-Alzheimers/alzheimers_2017_inline_dementia-graph_800x600_v2.jpg?h=600&amp;w=800&amp;la=en&amp;hash=2506D8E81D10B7E920CDB99C25AADA3A75903064\"> dfg"
-        var regex = "<img[\\s|\\S]*?src\\s*=\\s*[\\\"|'](.*?)[\\\"|'][\\s|\\S]*?>"
+        var regex = """<img[\s\S]*?src\s*=\s*["|'](.*?)["|'][\s\S]*?>"""
         val matcher = Pattern.compile(regex).matcher(input)
         matcher.find()
         assertNotNull(matcher.group(1))
