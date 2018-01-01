@@ -53,7 +53,7 @@ class HtmlExtractTest {
     @test
     fun testPatternForJianshu() {
         var input = """<img data-original-src="//upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg" data-original-width="4032" data-original-height="3024" data-original-format="image/jpeg" data-original-filesize="477338" src="https://upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">"""
-        var regex = HtmlExtract().regex
+        var regex = HtmlExtract().imgTagRegex
         val matcher = Pattern.compile(regex).matcher(input)
         matcher.find()
         println(matcher.group(1))
