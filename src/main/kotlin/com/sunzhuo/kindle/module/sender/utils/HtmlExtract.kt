@@ -18,6 +18,7 @@ import javax.imageio.ImageIO
 
 class HtmlExtract {
     val driver: PhantomJSDriver
+    val regex = """<img[\s\S]*?src\s*=\s*\s*["|'](http.*?)["|'][\s\S]*?>"""
 
     init {
         val phantomjs = DesiredCapabilities.phantomjs()
@@ -61,10 +62,7 @@ class HtmlExtract {
 
         //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
-
-        val regex = """<img[\s\S]*?src\s*=\s*["|'](.*?)["|'][\s\S]*?>"""
         var pageSource = driver.pageSource
-
         val m = Pattern.compile(regex).matcher(pageSource)
         while (m.find()) {
             pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))
@@ -82,7 +80,7 @@ class HtmlExtract {
             val temp = getTempPath(url)
             val file = File(temp.path + "/" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
-            val localImgTag = "<img src= ${file.path}>"
+            val localImgTag = "<img src=${file.path}>"
             return pageSource.replace(imgTag, localImgTag)
         } catch (e: ArrayIndexOutOfBoundsException) {
             e.printStackTrace()
