@@ -14,7 +14,7 @@ import java.util.regex.Pattern
 import javax.imageio.ImageIO
 
 class HtmlExtract {
-    val imgTagRegex = """<img[\s\S]*?src\s*=\s*\s*["|'](.*?)["|'][\s\S]*?>"""
+    val imgTagRegex = """^<img[\s\S]*?src=["|'](.*?)["|'][\s\S]*?>"""
     val driver: PhantomJSDriver = DriverProvider.getDrive()
 
     fun getReadabilityHtml(url: String): Article {

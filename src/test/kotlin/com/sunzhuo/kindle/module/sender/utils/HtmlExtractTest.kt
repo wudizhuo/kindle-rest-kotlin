@@ -61,8 +61,8 @@ class HtmlExtractTest {
     }
 
     @test
-    fun testTempUrl(){
-        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("http://mp.weixin.qq.com/s/KU7gUYwFFVGOQGWnZ__WLQ")
+    fun testRegexEndLessUrl(){
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://mp.weixin.qq.com/s/2Bi__FPfSMSli0pw6GtSAQ")
         println(path)
         assertNotNull(path)
     }
