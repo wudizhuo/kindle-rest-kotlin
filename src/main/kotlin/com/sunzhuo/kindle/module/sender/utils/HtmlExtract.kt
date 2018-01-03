@@ -72,7 +72,7 @@ class HtmlExtract {
             ImageIO.write(image, "png", file)
             val localImgTag = "<img src=${file.path}>"
             return pageSource.replace(imgTag, localImgTag)
-        } catch (e: ArrayIndexOutOfBoundsException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         return pageSource
