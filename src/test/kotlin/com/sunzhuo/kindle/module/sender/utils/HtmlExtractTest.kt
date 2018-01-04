@@ -67,6 +67,10 @@ class HtmlExtractTest {
         assertNotNull(path)
     }
 
-
-
+    @test
+    fun testTempUrl(){
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("http://mp.weixin.qq.com/s/2Bi__FPfSMSli0pw6GtSAQ")
+        println(path)
+        assertNotNull(path)
+    }
 }
