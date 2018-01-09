@@ -30,17 +30,24 @@ events {
 http {
  server {
    listen 80 default_server;
-   server_name localhost api.kindlezhushou.com;
+   server_name localhost www.kindlezhushou.com kindlezhushou.com;
    location / {
         root   /usr/share/nginx/html;
         index  index.html index.htm index.php;
         try_files $uri $uri/ /index.php?$uri&$args;
     }
-
-   location /v3 {
-       proxy_pass http://127.0.0.1:8083/;
-   }
  }
+ server {
+    listen 80;
+    server_name api.kindlezhushou.com;
+    location / {
+         proxy_pass http://127.0.0.1:8083/;
+     }
+ 
+    location /v3 {
+        proxy_pass http://127.0.0.1:8083/;
+    }
+  }
 }
 ```
 ```
