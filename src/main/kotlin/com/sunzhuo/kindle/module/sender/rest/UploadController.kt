@@ -20,7 +20,7 @@ class UploadController {
 
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
-    fun send(@RequestParam(value = "file") file: MultipartFile, @RequestParam(value = "from_email") from_email: String, @RequestParam(value = "from_email") to_email: String) {
+    fun send(@RequestParam(value = "file") file: MultipartFile, @RequestParam(value = "from_email") from_email: String, @RequestParam(value = "to_email") to_email: String) {
         if (!EmailValidator.getInstance().isValid(from_email)) {
             throw FromEmailInvalidException()
         }
