@@ -73,6 +73,12 @@ sudo docker run -t -d \
     mwader/postfix-relay
 ```
 
+mongo
+```
+sudo docker run --name mongo -t -d -p 27017:27017 mongo
+
+```
+
 Next TODO Step: 
 
 Create docker-compose.yml to group the docker steps. 

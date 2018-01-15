@@ -3,10 +3,13 @@ package com.sunzhuo.kindle.module.sender.service
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.common.httpstatus.UrlInvalidException
 import com.sunzhuo.kindle.module.sender.domain.Article
+import com.sunzhuo.kindle.module.sender.domain.SendRepository
 import com.sunzhuo.kindle.module.sender.domain.SendRequest
+import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
 import org.apache.commons.validator.routines.UrlValidator
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailException
 import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -46,9 +49,13 @@ object ContentService {
         return htmlPath.replace("html", "mobi")
     }
 
+    @Autowired
+    private lateinit var sendRepository: SendRepository
+
     fun send(request: SendRequest) {
         try {
             sendEmail(File(genMobi(request.url)), request.to_email, request.from_email)
+            sendRepository.save(request)
         } catch (e: MailException) {
             throw e
         } finally {
@@ -56,10 +63,14 @@ object ContentService {
         }
     }
 
+    @Autowired
+    private lateinit var uploadRepository: UploadRepository
+
     fun upload(path: String, from_email: String, to_email: String) {
         val uploadFile = File(path)
         try {
             sendEmail(uploadFile, to_email, from_email)
+            uploadRepository.save(uploadFile.name)
         } catch (e: MailException) {
             throw e
         } finally {
