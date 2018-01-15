@@ -47,6 +47,10 @@ sourceSets {
     }
 }
 
+springBoot {
+    mainClass = 'com.sunzhuo.kindle.Application'
+}
+
 docker {
     name "${project.group}/${jar.baseName}"
     files jar.archivePath
