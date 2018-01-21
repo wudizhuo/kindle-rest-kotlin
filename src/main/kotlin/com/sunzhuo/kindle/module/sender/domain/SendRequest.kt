@@ -11,5 +11,3 @@ data class SendRequest(val from_email: String, val to_email: String, val url: St
 }
 
 interface SendRepository : MongoRepository<SendRequest, String>
-
-interface UploadRepository : MongoRepository<String, String>

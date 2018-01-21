@@ -1,8 +1,8 @@
 buildscript {
     ext.kotlin_version = '1.2.10' // Required for Kotlin integration
-    ext.spring_boot_version = '1.5.4.RELEASE'
+    ext.spring_boot_version = '1.5.9.RELEASE'
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -39,6 +39,9 @@ jar {
 }
 
 sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs += 'src/main/java'
+
     main {
         resources {
             srcDirs "lib"

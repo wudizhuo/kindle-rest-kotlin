@@ -2,10 +2,7 @@ package com.sunzhuo.kindle.module.sender.service
 
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.common.httpstatus.UrlInvalidException
-import com.sunzhuo.kindle.module.sender.domain.Article
-import com.sunzhuo.kindle.module.sender.domain.SendRepository
-import com.sunzhuo.kindle.module.sender.domain.SendRequest
-import com.sunzhuo.kindle.module.sender.domain.UploadRepository
+import com.sunzhuo.kindle.module.sender.domain.*
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
 import org.apache.commons.validator.routines.UrlValidator
@@ -70,7 +67,7 @@ object ContentService {
         val uploadFile = File(path)
         try {
             sendEmail(uploadFile, to_email, from_email)
-            uploadRepository.save(uploadFile.name)
+            uploadRepository.save(UploadDomain(uploadFile.name))
         } catch (e: MailException) {
             throw e
         } finally {
