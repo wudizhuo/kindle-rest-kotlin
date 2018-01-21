@@ -6,7 +6,6 @@ import com.sunzhuo.kindle.module.sender.domain.*
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
 import org.apache.commons.validator.routines.UrlValidator
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailException
 import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -46,10 +45,7 @@ object ContentService {
         return htmlPath.replace("html", "mobi")
     }
 
-    @Autowired
-    private lateinit var sendRepository: SendRepository
-
-    fun send(request: SendRequest) {
+    fun send(request: SendRequest, sendRepository: SendRepository) {
         try {
             sendEmail(File(genMobi(request.url)), request.to_email, request.from_email)
             sendRepository.save(request)
@@ -60,10 +56,7 @@ object ContentService {
         }
     }
 
-    @Autowired
-    private lateinit var uploadRepository: UploadRepository
-
-    fun upload(path: String, from_email: String, to_email: String) {
+    fun upload(path: String, from_email: String, to_email: String, uploadRepository: UploadRepository) {
         val uploadFile = File(path)
         try {
             sendEmail(uploadFile, to_email, from_email)
