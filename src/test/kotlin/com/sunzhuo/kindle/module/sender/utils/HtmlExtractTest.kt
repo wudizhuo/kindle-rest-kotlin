@@ -44,7 +44,7 @@ class HtmlExtractTest {
     @test
     fun testPattern() {
         var input = "abc <img alt=\"A growing health crisis: The projected number of people with dementia from 2015 to 2050, millions\" src=\"https://www.gatesnotes.com/-/media/Images/Articles/Health/Digging-Deep-Into-Alzheimers/alzheimers_2017_inline_dementia-graph_800x600_v2.jpg?h=600&amp;w=800&amp;la=en&amp;hash=2506D8E81D10B7E920CDB99C25AADA3A75903064\"> dfg"
-        var regex = """<img[\s\S]*?src\s*=\s*["|'](.*?)["|'][\s\S]*?>"""
+        var regex = HtmlExtract().imgTagRegex
         val matcher = Pattern.compile(regex).matcher(input)
         matcher.find()
         assertNotNull(matcher.group(1))
@@ -52,10 +52,10 @@ class HtmlExtractTest {
 
     @test
     fun testPatternForJianshu() {
-        var input = """<img data-original-src="//upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg" data-original-width="4032" data-original-height="3024" data-original-format="image/jpeg" data-original-filesize="477338" src="https://upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">"""
-        var regex = HtmlExtract().imgTagRegex
+        val regex = HtmlExtract().imgTagRegex
+        val input = """<img data-original-src="//upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg" data-original-width="4032" data-original-height="3024" data-original-format="image/jpeg" data-original-filesize="477338" src="https://upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">"""
         val matcher = Pattern.compile(regex).matcher(input)
-        matcher.find()
+        println(matcher.find())
         println(matcher.group(1))
         assertNotNull(matcher.group(1))
     }
@@ -69,7 +69,7 @@ class HtmlExtractTest {
 
     @test
     fun testTempUrl(){
-        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("http://mp.weixin.qq.com/s/2Bi__FPfSMSli0pw6GtSAQ")
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://mp.weixin.qq.com/s/Sao1fpjdDxMbiMKVtwq1WA")
         println(path)
         assertNotNull(path)
     }
