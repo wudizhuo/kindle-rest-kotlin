@@ -8,13 +8,12 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver
 import org.springframework.boot.ApplicationTemp
 import org.springframework.core.io.ClassPathResource
 import java.io.File
-import java.net.MalformedURLException
 import java.net.URL
 import java.util.regex.Pattern
 import javax.imageio.ImageIO
 
 class HtmlExtract {
-    val imgTagRegex = """<img[\s\S]*?src="(.*?)""""
+    val imgTagRegex = """<img.*?src="(http.*?)".*?>"""
     val driver: PhantomJSDriver = DriverProvider.getDrive()
 
     fun getReadabilityHtml(url: String): Article {
@@ -59,20 +58,15 @@ class HtmlExtract {
 
     @Throws(ArrayIndexOutOfBoundsException::class)
     private fun downloadAndReplace(urlString: String, pageSource: String, imgUrl: String, imgTag: String): String {
-        val url = try {
-            URL(imgUrl)
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-            URL("http:" + imgUrl)
-        }
         try {
-            val image = ImageIO.read(url)
+            val image = ImageIO.read(URL(imgUrl))
             val temp = getTempPath(urlString)
             val file = File(temp.path, "kz" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
             val localImgTag = "<img src=${file.path}>"
             return pageSource.replace(imgTag, localImgTag)
         } catch (e: Exception) {
+            println("url--" + imgUrl)
             e.printStackTrace()
         }
         return pageSource

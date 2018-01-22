@@ -43,10 +43,11 @@ class HtmlExtractTest {
 
     @test
     fun testPattern() {
-        var input = "abc <img alt=\"A growing health crisis: The projected number of people with dementia from 2015 to 2050, millions\" src=\"https://www.gatesnotes.com/-/media/Images/Articles/Health/Digging-Deep-Into-Alzheimers/alzheimers_2017_inline_dementia-graph_800x600_v2.jpg?h=600&amp;w=800&amp;la=en&amp;hash=2506D8E81D10B7E920CDB99C25AADA3A75903064\"> dfg"
-        var regex = HtmlExtract().imgTagRegex
+        val input = "abc <img alt=\"A growing health crisis: The projected number of people with dementia from 2015 to 2050, millions\" src=\"https://www.gatesnotes.com/-/media/Images/Articles/Health/Digging-Deep-Into-Alzheimers/alzheimers_2017_inline_dementia-graph_800x600_v2.jpg?h=600&amp;w=800&amp;la=en&amp;hash=2506D8E81D10B7E920CDB99C25AADA3A75903064\"> dfg"
+        val regex = HtmlExtract().imgTagRegex
         val matcher = Pattern.compile(regex).matcher(input)
         matcher.find()
+        println(matcher.group(1))
         assertNotNull(matcher.group(1))
     }
 
@@ -54,6 +55,16 @@ class HtmlExtractTest {
     fun testPatternForJianshu() {
         val regex = HtmlExtract().imgTagRegex
         val input = """<img data-original-src="//upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg" data-original-width="4032" data-original-height="3024" data-original-format="image/jpeg" data-original-filesize="477338" src="https://upload-images.jianshu.io/upload_images/1798665-d93eae4c4e6dbd9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">"""
+        val matcher = Pattern.compile(regex).matcher(input)
+        println(matcher.find())
+        println(matcher.group(1))
+        assertNotNull(matcher.group(1))
+    }
+
+    @test
+    fun testPatternForWechat() {
+        val regex = HtmlExtract().imgTagRegex
+        val input = """</p><p><img data-s="300,640" data-type="png" data-src="https://mmbiz.qpic.cn/0?wx_fmt=png" data-ratio="0.33" src="data:image/gif;base64,g=="></p><p data-anchor-id="vss6">"""
         val matcher = Pattern.compile(regex).matcher(input)
         println(matcher.find())
         println(matcher.group(1))
