@@ -31,7 +31,15 @@ class UploadController {
         if (!EmailValidator.getInstance().isValid(to_email)) {
             throw ToEmailInvalidException()
         }
-        ContentService.upload(saveUploadedFile(file), from_email, to_email, uploadRepository)
+
+        if (to_email.endsWith("@kindle.cn")
+                || to_email.endsWith("@kindle.com")
+                || to_email.endsWith("@free.kindle.com")
+                || to_email.endsWith("@iduokan.com")) {
+            ContentService.upload(saveUploadedFile(file), from_email, to_email, uploadRepository)
+        } else {
+            throw ToEmailInvalidException()
+        }
     }
 
     @Throws(IOException::class)

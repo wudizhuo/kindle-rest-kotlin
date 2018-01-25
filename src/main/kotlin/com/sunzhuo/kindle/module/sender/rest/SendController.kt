@@ -28,6 +28,14 @@ class SendController {
         if (!EmailValidator.getInstance().isValid(request.to_email)) {
             throw ToEmailInvalidException()
         }
-        ContentService.send(request, sendRepository)
+
+        if (request.to_email.endsWith("@kindle.cn")
+                || request.to_email.endsWith("@kindle.com")
+                || request.to_email.endsWith("@free.kindle.com")
+                || request.to_email.endsWith("@iduokan.com")) {
+            ContentService.send(request, sendRepository)
+        } else {
+            throw ToEmailInvalidException()
+        }
     }
 }
