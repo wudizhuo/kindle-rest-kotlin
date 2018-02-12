@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.module.sender.domain.Article
 import org.openqa.selenium.WebDriverException
-import org.openqa.selenium.phantomjs.PhantomJSDriver
 import org.springframework.boot.ApplicationTemp
 import org.springframework.core.io.ClassPathResource
 import java.io.File
@@ -16,7 +15,6 @@ data class HtmlExtractData(val articleJson: String, val updatedPageSource: Strin
 
 class HtmlExtract {
     val imgTagRegex = """<img.*?src="(http.*?)".*?>"""
-    var driver: PhantomJSDriver = DriverProvider.getDrive()
 
     fun getReadabilityHtml(url: String): Article {
         val articleJson: String = getArticleJson(url).articleJson
@@ -24,6 +22,7 @@ class HtmlExtract {
     }
 
     private fun getArticleJson(url: String): HtmlExtractData {
+        val driver = DriverProvider.getDrive()
         val js1 = ClassPathResource("readability/JSDOMParser.js").inputStream.bufferedReader().use { it.readText() }
         val js2 = ClassPathResource("readability/Readability.js").inputStream.bufferedReader().use { it.readText() }
         val getArticleAndUpdateDocument = ClassPathResource("getArticle.js").inputStream.bufferedReader().use { it.readText() }
@@ -37,10 +36,8 @@ class HtmlExtract {
             return HtmlExtractData(articleJson, driver.pageSource)
         } catch (e: WebDriverException) {
             e.printStackTrace()
-            driver = DriverProvider.reset()
+            DriverProvider.reset()
             throw UrlContentNotFoundException()
-        } finally {
-            driver.close()
         }
     }
 
