@@ -12,40 +12,42 @@ import java.net.URL
 import java.util.regex.Pattern
 import javax.imageio.ImageIO
 
+data class HtmlExtractData(val articleJson: String, val updatedPageSource: String)
+
 class HtmlExtract {
     val imgTagRegex = """<img.*?src="(http.*?)".*?>"""
-    val driver: PhantomJSDriver = DriverProvider.getDrive()
+    var driver: PhantomJSDriver = DriverProvider.getDrive()
 
     fun getReadabilityHtml(url: String): Article {
-        val articleJson: String = getArticleJson(url)
+        val articleJson: String = getArticleJson(url).articleJson
         return Gson().fromJson(articleJson, Article::class.java)
     }
 
-    private fun getArticleJson(url: String): String {
-        driver.get(url)
+    private fun getArticleJson(url: String): HtmlExtractData {
         val js1 = ClassPathResource("readability/JSDOMParser.js").inputStream.bufferedReader().use { it.readText() }
         val js2 = ClassPathResource("readability/Readability.js").inputStream.bufferedReader().use { it.readText() }
         val getArticleAndUpdateDocument = ClassPathResource("getArticle.js").inputStream.bufferedReader().use { it.readText() }
         val js4 = js1 + js2 + getArticleAndUpdateDocument
-        val articleJson: String?
         try {
-            articleJson = driver.executeScript(js4) as String
+            driver.get(url)
+            val articleJson = driver.executeScript(js4) as String
+            if (articleJson.isEmpty() || articleJson == "null") {
+                throw UrlContentNotFoundException()
+            }
+            return HtmlExtractData(articleJson, driver.pageSource)
         } catch (e: WebDriverException) {
             e.printStackTrace()
+            driver = DriverProvider.reset()
             throw UrlContentNotFoundException()
+        } finally {
+            driver.close()
         }
-        if (articleJson.isEmpty() || articleJson == "null") {
-            throw UrlContentNotFoundException()
-        }
-        return articleJson
     }
 
     fun getReadabilityHtmlAndSave2Local(url: String): String {
-        getArticleJson(url)
-
         //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
-        var pageSource = driver.pageSource
+        var pageSource = getArticleJson(url).updatedPageSource
         val m = Pattern.compile(imgTagRegex).matcher(pageSource)
         while (m.find()) {
             pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))

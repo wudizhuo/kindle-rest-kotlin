@@ -8,9 +8,13 @@ import org.openqa.selenium.remote.HttpCommandExecutor
 import java.net.URL
 
 object DriverProvider {
-    val driver: PhantomJSDriver
+    lateinit var driver: PhantomJSDriver
 
     init {
+        initDriver()
+    }
+
+    private fun initDriver() {
         val phantomjs = DesiredCapabilities.phantomjs()
         phantomjs.isJavascriptEnabled = true
         phantomjs.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true)
@@ -24,6 +28,12 @@ object DriverProvider {
     }
 
     fun getDrive(): PhantomJSDriver {
+        return driver
+    }
+
+    fun reset(): PhantomJSDriver {
+        driver.quit()
+        initDriver()
         return driver
     }
 }
