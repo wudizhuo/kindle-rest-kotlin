@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.10' // Required for Kotlin integration
+    ext.kotlin_version = '1.2.41' // Required for Kotlin integration
     ext.spring_boot_version = '1.5.9.RELEASE'
     repositories {
         mavenCentral()
