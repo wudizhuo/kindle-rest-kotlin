@@ -71,6 +71,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-mongodb:$spring_boot_version"
 
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'net.dankito.readability4j:readability4j:1.0'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile 'junit:junit:4.12'
