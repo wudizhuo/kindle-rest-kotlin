@@ -6,7 +6,7 @@ import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.service.ContentService
 import org.apache.commons.validator.routines.EmailValidator
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.ApplicationTemp
+import org.springframework.boot.system.ApplicationTemp
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam

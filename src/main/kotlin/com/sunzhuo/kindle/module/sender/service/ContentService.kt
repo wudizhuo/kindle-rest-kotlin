@@ -2,7 +2,10 @@ package com.sunzhuo.kindle.module.sender.service
 
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.common.httpstatus.UrlInvalidException
-import com.sunzhuo.kindle.module.sender.domain.*
+import com.sunzhuo.kindle.module.sender.domain.SendRepository
+import com.sunzhuo.kindle.module.sender.domain.SendRequest
+import com.sunzhuo.kindle.module.sender.domain.UploadDomain
+import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
 import org.apache.commons.validator.routines.UrlValidator
@@ -16,11 +19,11 @@ object ContentService {
     fun getContent(urlStr: String): String {
         val url = checkUrl(urlStr)
 
-        val article: Article = HtmlExtract().getReadabilityHtml(url)
-        if (article.length == 0L) {
+        val article = HtmlExtract().getReadabilityHtml(url)
+        if (article.content == null) {
             throw UrlContentNotFoundException()
         }
-        return article.content
+        return article.content!!
     }
 
     private fun checkUrl(urlStr: String): String {
