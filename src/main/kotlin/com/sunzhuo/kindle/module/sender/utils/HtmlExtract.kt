@@ -12,7 +12,6 @@ import org.springframework.boot.system.ApplicationTemp
 import java.io.File
 import java.net.URI
 import java.net.URL
-import java.util.regex.Pattern
 import javax.imageio.ImageIO
 
 class HtmlExtract {
@@ -43,7 +42,7 @@ class HtmlExtract {
             get.addHeader("user-agent",
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
             return httpclient.execute(get) {
-                it.entity.content.bufferedReader(Charsets.UTF_8).use { it.readText() }
+                it.entity.content.bufferedReader().use { it.readText() }
             }
         } catch (e: Exception) {
             throw IllegalStateException(e)
@@ -59,32 +58,41 @@ class HtmlExtract {
         if (readabilityHtml.content == null) {
             throw UrlContentNotFoundException()
         }
-        var pageSource = readabilityHtml.content!!
-        val m = Pattern.compile(imgTagRegex).matcher(pageSource)
-        while (m.find()) {
-            pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))
-        }
+        downloadAndReplaceImg(readabilityHtml)
+        val pageSource = readabilityHtml.content!!
         val temp = getTempPath(url)
         val file = File(temp.path, "kz" + url.hashCode() + ".html")
         file.writeText(pageSource)
         return file.path
     }
 
+    private fun downloadAndReplaceImg(article: Article) {
+        article.articleContent?.let {
+            it.select("img").forEach {
+                if (it.attr("src").isEmpty()) {
+                    it.remove()
+                } else {
+                    it.attr("src", downloadAndReplace(article.uri, it.absUrl("src")))
+                }
+            }
+        }
+    }
+
     @Throws(ArrayIndexOutOfBoundsException::class)
-    private fun downloadAndReplace(urlString: String, pageSource: String, imgUrl: String, imgTag: String): String {
+    private fun downloadAndReplace(urlString: String, imgUrl: String): String {
         try {
             val image = ImageIO.read(URL(imgUrl))
             val temp = getTempPath(urlString)
             val file = File(temp.path, "kz" + imgUrl.hashCode() + ".png")
             ImageIO.write(image, "png", file)
-            val localImgTag = "<img src=${file.path}>"
-            return pageSource.replace(imgTag, localImgTag)
+            return file.path
         } catch (e: Exception) {
             println("url--$imgUrl")
             e.printStackTrace()
         }
-        return pageSource
+        return ""
     }
+
 
     fun getTempPath(url: String): File {
         return ApplicationTemp().getDir("kindle_img" + url.hashCode())
