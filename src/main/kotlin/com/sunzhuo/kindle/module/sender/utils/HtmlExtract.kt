@@ -1,12 +1,13 @@
 package com.sunzhuo.kindle.module.sender.utils
 
+import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import net.dankito.readability4j.Article
-import net.dankito.readability4j.Readability4J
 import net.dankito.readability4j.extended.Readability4JExtended
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.impl.client.LaxRedirectStrategy
 import org.apache.tomcat.util.http.fileupload.IOUtils
+import org.jsoup.nodes.Element
 import org.springframework.boot.system.ApplicationTemp
 import java.io.File
 import java.net.URI
@@ -19,7 +20,18 @@ class HtmlExtract {
 
     fun getReadabilityHtml(url: String): Article {
         val readability4J = Readability4JExtended(url, fetchUrl(url))
-        return readability4J.parse()
+        val article = readability4J.parse()
+        if (article.articleContent?.tagName() == "div") {
+            val html = Element("html")
+            val head = Element("head")
+            val headMeta = Element("meta")
+            headMeta.attr("charset", "utf-8")
+            head.insertChildren(0, headMeta)
+            html.insertChildren(0, head)
+            html.insertChildren(1, Element("body").insertChildren(0, article.articleContent))
+            article.articleContent = html
+        }
+        return article
     }
 
     private fun fetchUrl(url: String): String {
@@ -43,7 +55,11 @@ class HtmlExtract {
     fun getReadabilityHtmlAndSave2Local(url: String): String {
         //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
-        var pageSource = fetchUrl(url)
+        val readabilityHtml = getReadabilityHtml(url)
+        if (readabilityHtml.content == null) {
+            throw UrlContentNotFoundException()
+        }
+        var pageSource = readabilityHtml.content!!
         val m = Pattern.compile(imgTagRegex).matcher(pageSource)
         while (m.find()) {
             pageSource = downloadAndReplace(url, pageSource, m.group(1), m.group(0))

@@ -42,7 +42,7 @@ object ContentService {
     fun genMobi(urlStr: String): String {
         val url = checkUrl(urlStr)
         val htmlPath = HtmlExtract().getReadabilityHtmlAndSave2Local(url)
-        val process = Runtime.getRuntime().exec("kindlegen " + htmlPath)
+        val process = Runtime.getRuntime().exec("kindlegen $htmlPath")
         process.waitFor()
         process.destroy()
         return htmlPath.replace("html", "mobi")
