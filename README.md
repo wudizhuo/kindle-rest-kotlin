@@ -51,13 +51,6 @@ http {
 ```
 sudo docker run -t -d --name nginx --net host -v ~/nginx.conf:/etc/nginx/nginx.conf:ro -v ~/kindle_web_react:/usr/share/nginx/html nginx
 ```
-phantomjs
-
-use 'phantomjs testPhantomjs.js' for debug Phantomjs
-
-```
-sudo docker run -t -d --name phantomjs -p 8910:8910 wernight/phantomjs phantomjs --webdriver=8910
-```
 
 mwader/postfix-relay
 
