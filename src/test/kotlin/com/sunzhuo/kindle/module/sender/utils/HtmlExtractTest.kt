@@ -15,9 +15,9 @@ class HtmlExtractTest {
 
     @test
     fun testZhihu() {
-        val readabilityHtml = HtmlExtract().getReadabilityHtml("https://zhuanlan.zhihu.com/p/22049205")
-        println(readabilityHtml.content)
-        assertTrue(readabilityHtml.length > 0)
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://zhuanlan.zhihu.com/p/22049205")
+        println(path)
+        assertNotNull(path)
     }
 
     @test

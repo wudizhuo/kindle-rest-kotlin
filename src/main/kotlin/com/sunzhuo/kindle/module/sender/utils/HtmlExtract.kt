@@ -72,10 +72,11 @@ class HtmlExtract {
     private fun downloadAndReplaceImg(article: Article) {
         article.articleContent?.let {
             it.select("img").forEach {
-                if (it.absUrl("src").isEmpty()) {
+                val imgUrl = ImgUtil.getImgUrl(article.uri, it)
+                if (imgUrl.isEmpty()) {
                     it.remove()
                 } else {
-                    it.attr("src", downloadAndReplace(article.uri, it.absUrl("src")))
+                    it.attr("src", downloadAndReplace(article.uri, imgUrl))
                 }
             }
         }
