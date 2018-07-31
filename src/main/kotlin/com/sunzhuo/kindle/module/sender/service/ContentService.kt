@@ -4,7 +4,6 @@ import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.common.httpstatus.UrlInvalidException
 import com.sunzhuo.kindle.module.sender.domain.SendRepository
 import com.sunzhuo.kindle.module.sender.domain.SendRequest
-import com.sunzhuo.kindle.module.sender.domain.UploadDomain
 import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
@@ -51,7 +50,7 @@ object ContentService {
     fun send(request: SendRequest, sendRepository: SendRepository) {
         try {
             sendEmail(File(genMobi(request.url)), request.to_email, request.from_email)
-            sendRepository.save(request)
+//            sendRepository.save(request)
         } catch (e: MailException) {
             throw e
         } finally {
@@ -63,7 +62,7 @@ object ContentService {
         val uploadFile = File(path)
         try {
             sendEmail(uploadFile, to_email, from_email)
-            uploadRepository.save(UploadDomain(uploadFile.name))
+//            uploadRepository.save(UploadDomain(uploadFile.name))
         } catch (e: MailException) {
             throw e
         } finally {
