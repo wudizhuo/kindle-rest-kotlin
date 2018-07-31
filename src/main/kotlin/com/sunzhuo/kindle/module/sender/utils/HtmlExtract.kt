@@ -68,7 +68,6 @@ class HtmlExtract {
         return file.path
     }
 
-    //TODO 老的方案 可以解决微信的图片问题
     private fun downloadAndReplaceImg(article: Article) {
         article.articleContent?.let {
             it.select("img").forEach {
