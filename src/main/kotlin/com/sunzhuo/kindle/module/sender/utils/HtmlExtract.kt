@@ -24,7 +24,9 @@ class HtmlExtract {
             val html = Element("html")
             val head = Element("head")
             val headMeta = Element("meta")
-            headMeta.attr("charset", "utf-8")
+            headMeta.attr("http-equiv", "Content-Type")
+            headMeta.attr("content", "text/html; charset=utf-8")
+
             head.insertChildren(0, headMeta)
             html.insertChildren(0, head)
             html.insertChildren(1, Element("body").insertChildren(0, article.articleContent))
@@ -66,10 +68,11 @@ class HtmlExtract {
         return file.path
     }
 
+    //TODO 老的方案 可以解决微信的图片问题
     private fun downloadAndReplaceImg(article: Article) {
         article.articleContent?.let {
             it.select("img").forEach {
-                if (it.attr("src").isEmpty()) {
+                if (it.absUrl("src").isEmpty()) {
                     it.remove()
                 } else {
                     it.attr("src", downloadAndReplace(article.uri, it.absUrl("src")))
