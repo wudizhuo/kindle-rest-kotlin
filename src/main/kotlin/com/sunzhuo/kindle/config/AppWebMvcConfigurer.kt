@@ -1,4 +1,4 @@
-package com.sunzhuo.kindle.cofig
+package com.sunzhuo.kindle.config
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
