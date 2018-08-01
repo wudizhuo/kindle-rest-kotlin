@@ -48,15 +48,15 @@ compileTestKotlin {
 
 group = 'wudizhuo'
 
-jar {
+bootJar {
     baseName = 'kindle-rest-service'
     version = '1.0.0'
 }
 
 docker {
-    name "${project.group}/${jar.baseName}"
-    files jar.archivePath
-    buildArgs(['JAR_FILE': "${jar.archiveName}"])
+    name "${project.group}/${bootJar.baseName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
 repositories {
