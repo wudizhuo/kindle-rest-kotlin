@@ -18,11 +18,10 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'kotlin' // Required for Kotlin integration
 apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
-apply plugin: "kotlin-jpa"
 apply plugin: 'org.springframework.boot'
+apply plugin: "kotlin-jpa"
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 apply plugin: 'kotlin-kapt'
@@ -75,7 +74,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-mustache"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-mail"
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
 
     compile 'org.apache.httpcomponents:httpclient:4.5.6'
     compile 'com.google.code.gson:gson:2.8.2'

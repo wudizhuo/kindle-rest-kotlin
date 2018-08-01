@@ -2,9 +2,7 @@ package com.sunzhuo.kindle.module.sender.service
 
 import com.sunzhuo.kindle.common.httpstatus.UrlContentNotFoundException
 import com.sunzhuo.kindle.common.httpstatus.UrlInvalidException
-import com.sunzhuo.kindle.module.sender.domain.SendRepository
 import com.sunzhuo.kindle.module.sender.domain.SendRequest
-import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.utils.HtmlExtract
 import com.sunzhuo.kindle.module.sender.utils.UrlUtil
 import org.apache.commons.validator.routines.UrlValidator
@@ -47,10 +45,9 @@ object ContentService {
         return htmlPath.replace("html", "mobi")
     }
 
-    fun send(request: SendRequest, sendRepository: SendRepository) {
+    fun send(request: SendRequest) {
         try {
             sendEmail(File(genMobi(request.url)), request.to_email, request.from_email)
-//            sendRepository.save(request)
         } catch (e: MailException) {
             throw e
         } finally {
@@ -58,11 +55,10 @@ object ContentService {
         }
     }
 
-    fun upload(path: String, from_email: String, to_email: String, uploadRepository: UploadRepository) {
+    fun upload(path: String, from_email: String, to_email: String) {
         val uploadFile = File(path)
         try {
             sendEmail(uploadFile, to_email, from_email)
-//            uploadRepository.save(UploadDomain(uploadFile.name))
         } catch (e: MailException) {
             throw e
         } finally {

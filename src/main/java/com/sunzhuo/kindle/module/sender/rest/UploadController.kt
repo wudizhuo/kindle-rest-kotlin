@@ -36,7 +36,7 @@ class UploadController {
                 || to_email.endsWith("@kindle.com")
                 || to_email.endsWith("@free.kindle.com")
                 || to_email.endsWith("@iduokan.com")) {
-            ContentService.upload(saveUploadedFile(file), from_email, to_email, uploadRepository)
+            ContentService.upload(saveUploadedFile(file), from_email, to_email)
         } else {
             throw ToEmailInvalidException()
         }
