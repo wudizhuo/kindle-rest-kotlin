@@ -16,8 +16,5 @@ class Application {
 }
 
 fun main(args: Array<String>) {
-    System.getProperties()["server.port"] = "8083"
-    System.getProperties()["spring.http.multipart.max-file-size"] = "128MB"
-    System.getProperties()["spring.http.multipart.max-request-size"] = "128MB"
     runApplication<Application>(*args)
 }
