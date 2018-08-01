@@ -2,10 +2,8 @@ package com.sunzhuo.kindle.module.sender.rest
 
 import com.sunzhuo.kindle.common.httpstatus.FromEmailInvalidException
 import com.sunzhuo.kindle.common.httpstatus.ToEmailInvalidException
-import com.sunzhuo.kindle.module.sender.domain.UploadRepository
 import com.sunzhuo.kindle.module.sender.service.ContentService
 import org.apache.commons.validator.routines.EmailValidator
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.system.ApplicationTemp
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,8 +17,6 @@ import java.nio.file.Paths
 
 @RestController
 class UploadController {
-    @Autowired
-    private lateinit var uploadRepository: UploadRepository
 
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
