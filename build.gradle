@@ -66,10 +66,6 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-test {
-    useJUnitPlatform()
-}
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -97,3 +93,5 @@ dependencies {
 
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"
 }
+
+test.testClassesDir = project.tasks.compileTestKotlin.destinationDir
