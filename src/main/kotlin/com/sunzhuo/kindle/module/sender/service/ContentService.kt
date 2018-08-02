@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.mail.javamail.MimeMessageHelper
 import java.io.File
 
-
 object ContentService {
     fun getContent(urlStr: String): String {
         val url = checkUrl(urlStr)

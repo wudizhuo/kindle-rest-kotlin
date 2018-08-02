@@ -19,7 +19,6 @@ class ContentServiceTest {
         assertNotNull(path)
     }
 
-
     @Test
     fun testSaveJianshu() {
         val path = ContentService.genMobi("https://www.jianshu.com/p/cbbf9fc80edc?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io")
