@@ -26,8 +26,8 @@ class HtmlExtract {
             val headMeta = Element("meta")
             headMeta.attr("http-equiv", "Content-Type")
             headMeta.attr("content", "text/html; charset=utf-8")
-
             head.insertChildren(0, headMeta)
+            head.insertChildren(1, Element("title").text(article.title))
             html.insertChildren(0, head)
             html.insertChildren(1, Element("body").insertChildren(0, article.articleContent))
             article.articleContent = html
@@ -57,6 +57,7 @@ class HtmlExtract {
         //TODO 这里没有错误的话 就可以先返回ok 再继续后台做就可以了，不需要前台等这么久
         //TODO 用子线程 继续做
         val readabilityHtml = getReadabilityHtml(url)
+        println("---readabilityHtml---"+readabilityHtml.content)
         if (readabilityHtml.content == null) {
             throw UrlContentNotFoundException()
         }
