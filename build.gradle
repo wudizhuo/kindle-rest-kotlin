@@ -25,6 +25,20 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/JacocoReports")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
 
 allOpen {
     annotation("com.sunzhuo.kindle.annotation.Data")

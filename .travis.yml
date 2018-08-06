@@ -13,3 +13,6 @@ before_install:
 
 script:
 - ./gradlew test --stacktrace
+
+after_success:
+- bash <(curl -s https://codecov.io/bash) -t 3c80739e-8011-48e8-a8ed-ae9a43af71d0
