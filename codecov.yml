@@ -1,0 +1,4 @@
+ignore:
+  - "src/main/kotlin/com/sunzhuo/kindle/module/sender/domain"  # ignore folders and all its contents
+  - "src/main/kotlin/com/sunzhuo/kindle/demo"  # ignore folders and all its contents
+  - "src/main/kotlin/com/sunzhuo/kindle/common/httpstatus"  # ignore folders and all its contents
