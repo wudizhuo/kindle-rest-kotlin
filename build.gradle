@@ -104,7 +104,7 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
+        xml.enabled true
         html.enabled true
     }
 }
