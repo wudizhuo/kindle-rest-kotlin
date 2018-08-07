@@ -94,6 +94,8 @@ dependencies {
 
     //Http Monitor
     compile 'com.moesif.servlet:moesif-servlet:1.2.0'
+    //Airbrake
+    compile 'io.airbrake:javabrake:0.1.6'
 
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"
 }

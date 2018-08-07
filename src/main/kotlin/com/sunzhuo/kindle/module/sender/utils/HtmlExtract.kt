@@ -47,6 +47,7 @@ class HtmlExtract {
                 it.entity.content.bufferedReader().use { it.readText() }
             }
         } catch (e: Exception) {
+            LoggerReport.notifier.report(e)
             throw IllegalStateException(e)
         } finally {
             IOUtils.closeQuietly(httpclient)
