@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/wudizhuo/kindle-rest-kotlin.svg?branch=master)](https://travis-ci.org/wudizhuo/kindle-rest-kotlin)
-
+[![Build Status](https://travis-ci.org/wudizhuo/kindle-rest-kotlin.svg?branch=master)](https://travis-ci.org/wudizhuo/kindle-rest-kotlin) 
+[![codecov](https://codecov.io/gh/wudizhuo/kindle-rest-kotlin/branch/master/graph/badge.svg)](https://codecov.io/gh/wudizhuo/kindle-rest-kotlin)
 ## kindle-rest-service
 
 To run:
