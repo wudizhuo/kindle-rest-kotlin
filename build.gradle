@@ -92,6 +92,9 @@ dependencies {
     compile 'net.dankito.readability4j:readability4j:1.0'
     compile 'commons-validator:commons-validator:1.6'
 
+    //Http Monitor
+    compile 'com.moesif.servlet:moesif-servlet:1.2.0'
+
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"
 }
 
