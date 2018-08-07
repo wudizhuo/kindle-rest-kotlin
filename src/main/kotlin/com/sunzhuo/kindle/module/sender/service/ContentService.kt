@@ -17,7 +17,7 @@ object ContentService {
 
         val article = HtmlExtract().getReadabilityHtml(url)
         if (article.content == null) {
-            throw UrlContentNotFoundException()
+            throw UrlContentNotFoundException(urlStr)
         }
         return article.content!!
     }
@@ -25,12 +25,12 @@ object ContentService {
     private fun checkUrl(urlStr: String): String {
         var url = urlStr.trim()
         if (url.isEmpty()) {
-            throw UrlInvalidException()
+            throw UrlInvalidException(url)
         }
         url = UrlUtil().parseUrl(url)
         val urlValidator = UrlValidator(arrayOf("http", "https"))
         if (!urlValidator.isValid(url)) {
-            throw UrlInvalidException()
+            throw UrlInvalidException(url)
         }
         return url
     }
@@ -68,7 +68,7 @@ object ContentService {
     @Throws(MailException::class)
     private fun sendEmail(mobiFile: File, to_email: String, from_email: String) {
         if (!mobiFile.exists()) {
-            throw UrlContentNotFoundException()
+            throw UrlContentNotFoundException("Mobi File Not Exist")
         }
         val mailSender = JavaMailSenderImpl()
         mailSender.host = "localhost"

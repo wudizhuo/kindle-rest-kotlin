@@ -22,10 +22,10 @@ class UploadController {
     @ResponseStatus(HttpStatus.CREATED)
     fun send(@RequestParam(value = "file") file: MultipartFile, @RequestParam(value = "from_email") from_email: String, @RequestParam(value = "to_email") to_email: String) {
         if (!EmailValidator.getInstance().isValid(from_email)) {
-            throw FromEmailInvalidException()
+            throw FromEmailInvalidException(from_email)
         }
         if (!EmailValidator.getInstance().isValid(to_email)) {
-            throw ToEmailInvalidException()
+            throw ToEmailInvalidException(to_email)
         }
 
         if (to_email.endsWith("@kindle.cn")
@@ -34,7 +34,7 @@ class UploadController {
                 || to_email.endsWith("@iduokan.com")) {
             ContentService.upload(saveUploadedFile(file), from_email, to_email)
         } else {
-            throw ToEmailInvalidException()
+            throw ToEmailInvalidException(to_email)
         }
     }
 

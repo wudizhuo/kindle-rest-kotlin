@@ -18,10 +18,10 @@ class SendController {
     @ResponseStatus(HttpStatus.CREATED)
     fun send(@RequestBody request: SendRequest) {
         if (!EmailValidator.getInstance().isValid(request.from_email)) {
-            throw FromEmailInvalidException()
+            throw FromEmailInvalidException(request.from_email)
         }
         if (!EmailValidator.getInstance().isValid(request.to_email)) {
-            throw ToEmailInvalidException()
+            throw ToEmailInvalidException(request.to_email)
         }
 
         if (request.to_email.endsWith("@kindle.cn")
@@ -30,7 +30,7 @@ class SendController {
                 || request.to_email.endsWith("@iduokan.com")) {
             ContentService.send(request)
         } else {
-            throw ToEmailInvalidException()
+            throw ToEmailInvalidException(request.to_email)
         }
     }
 }

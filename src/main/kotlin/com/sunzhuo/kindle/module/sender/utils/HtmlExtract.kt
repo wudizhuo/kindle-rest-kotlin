@@ -59,7 +59,7 @@ class HtmlExtract {
         //TODO 用子线程 继续做
         val readabilityHtml = getReadabilityHtml(url)
         if (readabilityHtml.content == null) {
-            throw UrlContentNotFoundException()
+            throw UrlContentNotFoundException(url)
         }
         downloadAndReplaceImg(readabilityHtml)
         val pageSource = readabilityHtml.content!!
