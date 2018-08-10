@@ -22,7 +22,7 @@ class HtmlExtractTest {
 
     @test
     fun testZhihuAnswer() {
-        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://www.zhihu.com/question/34393362/answer/137935307")
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://www.zhihu.com/question/62569341/answer/205327777")
         println(path)
         assertNotNull(path)
     }
