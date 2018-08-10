@@ -1,17 +1,15 @@
 package com.sunzhuo.kindle.module.sender.utils
 
+import org.nibor.autolink.LinkExtractor
+import org.nibor.autolink.LinkType
+import java.util.*
+
 class UrlUtil {
     fun parseUrl(url: String): String {
-        //TODO 过滤乱七八糟的网址
-        val urlStr = clipUrl(url)
-        return urlStr
-    }
-
-    private fun clipUrl(url: String): String {
-        val startIndex = url.indexOf("http")
-        if (startIndex == -1) {
-            return ""
-        }
-        return url.substring(startIndex)
+        val linkExtractor = LinkExtractor.builder()
+                .linkTypes(EnumSet.of(LinkType.URL, LinkType.WWW))
+                .build()
+        val link = linkExtractor.extractLinks(url).iterator().next()
+        return url.substring(link.beginIndex, link.endIndex)
     }
 }

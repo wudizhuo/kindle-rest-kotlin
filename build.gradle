@@ -97,6 +97,8 @@ dependencies {
     //Airbrake
     compile 'io.airbrake:javabrake:0.1.6'
 
+    compile "org.nibor.autolink:autolink:0.9.0"
+
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"
 }
 
