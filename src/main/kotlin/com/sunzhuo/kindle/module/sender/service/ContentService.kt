@@ -23,11 +23,10 @@ object ContentService {
     }
 
     private fun checkUrl(urlStr: String): String {
-        var url = urlStr.trim()
+        val url = UrlUtil().parseUrl(urlStr.trim())
         if (url.isEmpty()) {
             throw UrlInvalidException(url)
         }
-        url = UrlUtil().parseUrl(url)
         val urlValidator = UrlValidator(arrayOf("http", "https"))
         if (!urlValidator.isValid(url)) {
             throw UrlInvalidException(url)
