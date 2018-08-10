@@ -21,6 +21,13 @@ class HtmlExtractTest {
     }
 
     @test
+    fun testZhihuAnswer() {
+        val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://www.zhihu.com/question/34393362/answer/137935307")
+        println(path)
+        assertNotNull(path)
+    }
+
+    @test
     fun testJianShu() {
         val path = HtmlExtract().getReadabilityHtmlAndSave2Local("https://www.jianshu.com/p/cbbf9fc80edc?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io")
         println(path)
