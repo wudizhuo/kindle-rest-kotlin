@@ -43,8 +43,8 @@ class HtmlExtract {
             val get = HttpGet(URI.create(url)) // we're using GET but it could be via POST as well
             get.addHeader("user-agent",
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
-            return httpclient.execute(get) { it ->
-                it.entity.content.bufferedReader().use { it.readText() }
+            return httpclient.execute(get) { response ->
+                response.entity.content.bufferedReader().use { it.readText() }
             }
         } catch (e: Exception) {
             LoggerReport.notifier.report(e)
